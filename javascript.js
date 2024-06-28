@@ -21,16 +21,21 @@ function getHumanChoice(selection) {
 
 let humanScore = 0;
 let ComputerScore = 0;
+let gameEnded = false;
 
 //individual rounds
 
 function playRound(humanSelection, computerSelection) {
   if (humanSelection == computerSelection) {
-    const eachReault = document.querySelector("#result");
+    const eachResult = document.querySelector("#result");
     const resulText = document.createElement("h5");
-    let draw = `You Chose:${humanSelection} and AI chose:${computerSelection} = It's a Draw`;
+    const scoreText = document.createElement("div");
+    let draw = `You Chose: ${humanSelection} and AI chose: ${computerSelection} = It's a Draw`;
+    let score = `Your Score: ${humanScore} | AI Score: ${ComputerScore}`;
     resulText.textContent = draw;
-    eachReault.appendChild(resulText);
+    scoreText.textContent = score;
+    eachResult.appendChild(resulText);
+    resulText.appendChild(scoreText);
   } else if (
     (humanSelection == "rock" && computerSelection == "paper") ||
     (humanSelection == "paper" && computerSelection == "scissors") ||
@@ -42,6 +47,11 @@ function playRound(humanSelection, computerSelection) {
     let AiWin = `You Chose:${humanSelection} and AI chose:${computerSelection} = AI Won this round`;
     resulText.textContent = AiWin;
     eachReault.appendChild(resulText);
+    //for score
+    const scoreText = document.createElement("div");
+    let score = `Your Score: ${humanScore} | AI Score: ${ComputerScore}`;
+    scoreText.textContent = score;
+    resulText.appendChild(scoreText);
   } else {
     humanScore++;
     const eachReault = document.querySelector("#result");
@@ -49,6 +59,11 @@ function playRound(humanSelection, computerSelection) {
     let YouWin = `You Chose:${humanSelection} and AI chose:${computerSelection} = You Won this round`;
     resulText.textContent = YouWin;
     eachReault.appendChild(resulText);
+    //for score
+    const scoreText = document.createElement("div");
+    let score = `Your Score: ${humanScore} | AI Score: ${ComputerScore}`;
+    scoreText.textContent = score;
+    resulText.appendChild(scoreText);
   }
 }
 
@@ -73,10 +88,32 @@ function playRound(humanSelection, computerSelection) {
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
+    if (gameEnded) return;
     const humanSelection = getHumanChoice(button.id);
     const computerSelection = getComputerChoice();
     console.log(humanSelection);
     console.log(computerSelection);
+    if (
+      (humanScore === 5 || ComputerScore === 5) &&
+      humanScore > ComputerScore
+    ) {
+      gameEnded = true;
+
+      const finalResult = document.querySelector("#finalResult");
+      const result = document.createElement("div");
+      result.textContent = "----You Won----";
+      finalResult.appendChild(result);
+    } else if (
+      (humanScore === 5 || ComputerScore === 5) &&
+      humanScore < ComputerScore
+    ) {
+      gameEnded = true;
+
+      const finalResult = document.querySelector("#finalResult");
+      const result = document.createElement("div");
+      result.textContent = "----AI Won----";
+      finalResult.appendChild(result);
+    }
 
     playRound(humanSelection, computerSelection);
   });
