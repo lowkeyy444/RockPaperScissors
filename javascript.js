@@ -14,11 +14,9 @@ function getComputerChoice() {
   }
 }
 
-//Human choice
-
-function getHumanChoice() {
-  let choiceHuman = prompt("Choose: Rock ,Paper ,Scissors");
-  return choiceHuman.toLowerCase();
+//Human Choice
+function getHumanChoice(selection) {
+  return selection;
 }
 
 let humanScore = 0;
@@ -28,41 +26,58 @@ let ComputerScore = 0;
 
 function playRound(humanSelection, computerSelection) {
   if (humanSelection == computerSelection) {
+    const eachReault = document.querySelector("#result");
+    const resulText = document.createElement("h5");
     let draw = `You Chose:${humanSelection} and AI chose:${computerSelection} = It's a Draw`;
-    return draw;
-  }
-
-  if (
+    resulText.textContent = draw;
+    eachReault.appendChild(resulText);
+  } else if (
     (humanSelection == "rock" && computerSelection == "paper") ||
     (humanSelection == "paper" && computerSelection == "scissors") ||
     (humanSelection == "scissors" && computerSelection == "rock")
   ) {
     ComputerScore++;
+    const eachReault = document.querySelector("#result");
+    const resulText = document.createElement("h5");
     let AiWin = `You Chose:${humanSelection} and AI chose:${computerSelection} = AI Won this round`;
-    return AiWin;
+    resulText.textContent = AiWin;
+    eachReault.appendChild(resulText);
   } else {
     humanScore++;
+    const eachReault = document.querySelector("#result");
+    const resulText = document.createElement("h5");
     let YouWin = `You Chose:${humanSelection} and AI chose:${computerSelection} = You Won this round`;
-    return YouWin;
+    resulText.textContent = YouWin;
+    eachReault.appendChild(resulText);
   }
 }
 
 // game start function
 
-function playGame() {
-  for (let i = 1; i <= 5; i++) {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
-    const result = playRound(humanSelection, computerSelection);
-    console.log(`Round ${i} ${result}`);
-  }
-  if (ComputerScore > humanScore) {
-    console.log(`AI Won the game with a score of ${ComputerScore}`);
-  } else if (ComputerScore < humanScore) {
-    console.log(`You Won the game with a score of ${ComputerScore}`);
-  } else {
-    console.log("It's a draw, Rematch?");
-  }
-}
+// function playGame() {
+//   const humanSelection = getHumanChoice();
+//   const computerSelection = getComputerChoice();
 
-playGame();
+//   if (ComputerScore > humanScore) {
+//     console.log(`AI Won the game with a score of ${ComputerScore}`);
+//   } else if (ComputerScore < humanScore) {
+//     console.log(`You Won the game with a score of ${ComputerScore}`);
+//   } else {
+//     console.log("It's a draw, Rematch?");
+//   }
+// }
+
+// playGame();
+
+//event listner for each button
+const buttons = document.querySelectorAll("button");
+buttons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const humanSelection = getHumanChoice(button.id);
+    const computerSelection = getComputerChoice();
+    console.log(humanSelection);
+    console.log(computerSelection);
+
+    playRound(humanSelection, computerSelection);
+  });
+});
