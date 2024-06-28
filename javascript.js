@@ -67,25 +67,6 @@ function playRound(humanSelection, computerSelection) {
   }
 }
 
-// game start function
-
-// function playGame() {
-//   const humanSelection = getHumanChoice();
-//   const computerSelection = getComputerChoice();
-
-//   if (ComputerScore > humanScore) {
-//     console.log(`AI Won the game with a score of ${ComputerScore}`);
-//   } else if (ComputerScore < humanScore) {
-//     console.log(`You Won the game with a score of ${ComputerScore}`);
-//   } else {
-//     console.log("It's a draw, Rematch?");
-//   }
-// }
-
-// playGame();
-
-//event listner for each button
-
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
@@ -114,13 +95,10 @@ buttons.forEach((button) => {
       result.textContent = "----AI Won----";
       finalResult.appendChild(result);
     }
-    if(gameEnded==false){
-    playRound(humanSelection, computerSelection);}else{
+    if (gameEnded == false) {
+      playRound(humanSelection, computerSelection);
+    } else {
       return;
-      
     }
-
-
-  
   });
 });
