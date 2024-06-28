@@ -85,10 +85,10 @@ function playRound(humanSelection, computerSelection) {
 // playGame();
 
 //event listner for each button
+
 const buttons = document.querySelectorAll("button");
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
-    if (gameEnded) return;
     const humanSelection = getHumanChoice(button.id);
     const computerSelection = getComputerChoice();
     console.log(humanSelection);
@@ -114,7 +114,13 @@ buttons.forEach((button) => {
       result.textContent = "----AI Won----";
       finalResult.appendChild(result);
     }
+    if(gameEnded==false){
+    playRound(humanSelection, computerSelection);}else{
+      return;
+      
+    }
 
-    playRound(humanSelection, computerSelection);
+
+  
   });
 });
